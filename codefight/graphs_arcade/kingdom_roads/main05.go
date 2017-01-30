@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main05() {
 	roads := [][]int{
 		{0, 1, 0},
 		{4, 1, 2},
