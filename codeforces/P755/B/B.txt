@@ -1,0 +1,25 @@
+__IN__
+5 1
+polandball
+is
+a
+cool
+character
+nope
+__OUT__
+YES
+__IN__
+2 2
+kremowka
+wadowicka
+kremowka
+wiedenska
+__OUT__
+YES
+__IN__
+1 2
+a
+a
+b
+__OUT__
+NO

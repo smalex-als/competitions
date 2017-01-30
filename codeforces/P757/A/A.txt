@@ -1,0 +1,12 @@
+__IN__
+Bulbbasaur
+__OUT__
+1
+__IN__
+F
+__OUT__
+0
+__IN__
+aBddulbasaurrgndgbualdBdsagaurrgndbb
+__OUT__
+2

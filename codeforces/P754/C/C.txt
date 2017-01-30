@@ -1,0 +1,30 @@
+__IN__
+1
+2
+Vladik netman
+2
+?: Hello, Vladik!
+?: Hi
+__OUT__
+netman: Hello, Vladik!
+Vladik: Hi
+__IN__
+2
+3
+netman vladik Fedosik
+2
+?: users are netman, vladik, Fedosik
+vladik: something wrong with this chat
+4
+netman tigerrrrr banany2001 klinchuh
+4
+?: tigerrrrr, banany2001, klinchuh, my favourite team ever, are you ready?
+klinchuh: yes, coach!
+?: yes, netman
+banany2001: yes of course.
+__OUT__
+Impossible
+netman: tigerrrrr, banany2001, klinchuh, my favourite team ever, are you ready?
+klinchuh: yes, coach!
+tigerrrrr: yes, netman
+banany2001: yes of course.

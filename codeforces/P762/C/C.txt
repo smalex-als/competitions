@@ -1,0 +1,5 @@
+__IN__
+abacaba
+abcdcba
+__OUT__
+abcba
