@@ -24,6 +24,7 @@ func RunTest(name string, t *testing.T) {
 	}
 	defer file.Close()
 	start := time.Now()
+	defer os.Remove(name)
 	defer log.Printf("%s: %.05f s", name, float64(time.Since(start).Nanoseconds())/1000000000)
 
 	scanner := bufio.NewScanner(file)

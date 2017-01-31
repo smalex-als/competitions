@@ -8,22 +8,11 @@ import (
 )
 
 func solve() {
-	A := readInt()
-	B := readInt()
-	for j := 1; j <= 100; j++ {
-		a := A
-		b := B
-		for i := j; i <= 100; i++ {
-			if i%2 == 0 {
-				a--
-			} else {
-				b--
-			}
-			if a == 0 && b == 0 {
-				fmt.Println("YES")
-				return
-			}
-		}
+	a := readInt()
+	b := readInt()
+	if (a+1 == b || b+1 == a || a == b) && !(a == 0 && b == 0) {
+		fmt.Println("YES")
+		return
 	}
 	fmt.Println("NO")
 }
