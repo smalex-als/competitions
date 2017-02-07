@@ -1,0 +1,10 @@
+__IN__
+abcd
+defgh
+__OUT__
+5
+__IN__
+a
+ab
+__OUT__
+2
