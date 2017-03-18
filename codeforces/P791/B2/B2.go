@@ -7,30 +7,29 @@ import (
 	"strconv"
 )
 
-var edges int64
-var size int64
-
 func solve() {
 	n := readInt()
 	m := readInt()
-	matrix := make([][]int, n)
-	for i := 0; i < n; i++ {
-		matrix[i] = make([]int, 0)
-	}
+	sizes := make([]int, n)
+	set := NewDJSet(n)
 	for i := 0; i < m; i++ {
 		v := readInt() - 1
 		u := readInt() - 1
-		matrix[v] = append(matrix[v], u)
-		matrix[u] = append(matrix[u], v)
+		set.Union(v, u)
+		sizes[u]++
+		sizes[v]++
 	}
-	visited := make([]bool, n)
 	ans := true
+
+	byroot := make([]int, n)
 	for i := 0; i < n; i++ {
-		if !visited[i] {
-			edges = 0
-			size = 0
-			dfs(i, matrix, visited)
-			if size*(size-1) != edges {
+		root := set.Root(i)
+		byroot[root] += sizes[i]
+	}
+	for i := 0; i < n; i++ {
+		size := int64(-set.Upper(i))
+		if size > 0 {
+			if size*(size-1) != int64(byroot[i]) {
 				ans = false
 				break
 			}
@@ -43,15 +42,56 @@ func solve() {
 	}
 }
 
-func dfs(u int, matrix [][]int, visited []bool) {
-	visited[u] = true
-	size++
-	for _, v := range matrix[u] {
-		if !visited[v] {
-			dfs(v, matrix, visited)
-		}
-		edges++
+type DJSet struct {
+	upper []int
+}
+
+func NewDJSet(n int) *DJSet {
+	s := DJSet{upper: make([]int, n)}
+	for i := 0; i < n; i++ {
+		s.upper[i] = -1
 	}
+	return &s
+}
+
+func (s *DJSet) Root(x int) int {
+	if s.upper[x] < 0 {
+		return x
+	} else {
+		s.upper[x] = s.Root(s.upper[x])
+	}
+	return s.upper[x]
+}
+
+func (s *DJSet) Union(x, y int) bool {
+	x = s.Root(x)
+	y = s.Root(y)
+	if x != y {
+		if s.upper[y] < s.upper[x] {
+			x, y = y, x
+		}
+		s.upper[x] += s.upper[y]
+		s.upper[y] = x
+	}
+	return x == y
+}
+
+func (s *DJSet) Equiv(x, y int) bool {
+	return s.Root(x) == s.Root(y)
+}
+
+func (s *DJSet) Upper(y int) int {
+	return s.upper[y]
+}
+
+func (s *DJSet) Count() int {
+	ct := 0
+	for _, u := range s.upper {
+		if u < 0 {
+			ct++
+		}
+	}
+	return ct
 }
 
 var scanner *bufio.Scanner
