@@ -1,0 +1,5 @@
+__IN__
+5 3
+YES NO YES
+__OUT__
+Aa Ab Ac Ab Ae
