@@ -8,43 +8,19 @@ import (
 )
 
 func solve() {
-	n := readInt()
-	m := readInt()
-	matrix := make([][]int, n)
-	for i := 0; i < n; i++ {
-		matrix[i] = make([]int, 0)
-	}
-	for i := 0; i < m; i++ {
-		v := readInt() - 1
-		u := readInt() - 1
-		matrix[v] = append(matrix[v], u)
-		matrix[u] = append(matrix[u], v)
-	}
-	ans := "YES"
-	visit := make([]bool, n)
-	for i := 0; i < n; i++ {
-		if !visit[i] {
-			var size int64
-			var edges int64
-			dfs(i, matrix, visit, &edges, &size)
-			if size*(size-1) != edges {
-				ans = "NO"
-				break
+	a := readInt()
+	b := readInt()
+	c := readInt()
+	d := readInt()
+	for i := 0; i < 100000; i++ {
+		if i >= b && i >= d {
+			if (i-b)%a == 0 && (i-d)%c == 0 {
+				fmt.Println(i)
+				return
 			}
 		}
 	}
-	fmt.Println(ans)
-}
-
-func dfs(u int, matrix [][]int, visited []bool, edges, size *int64) {
-	visited[u] = true
-	*size++
-	*edges += int64(len(matrix[u]))
-	for _, v := range matrix[u] {
-		if !visited[v] {
-			dfs(v, matrix, visited, edges, size)
-		}
-	}
+	fmt.Println(-1)
 }
 
 var scanner *bufio.Scanner
@@ -57,8 +33,8 @@ func main() {
 	solve()
 }
 
-func max(a, b int) int {
-	if a > b {
+func min(a int, b int) int {
+	if a < b {
 		return a
 	}
 	return b

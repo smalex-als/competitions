@@ -10,41 +10,30 @@ import (
 func solve() {
 	n := readInt()
 	m := readInt()
-	matrix := make([][]int, n)
-	for i := 0; i < n; i++ {
-		matrix[i] = make([]int, 0)
-	}
+	ans := "NO"
 	for i := 0; i < m; i++ {
-		v := readInt() - 1
-		u := readInt() - 1
-		matrix[v] = append(matrix[v], u)
-		matrix[u] = append(matrix[u], v)
-	}
-	ans := "YES"
-	visit := make([]bool, n)
-	for i := 0; i < n; i++ {
-		if !visit[i] {
-			var size int64
-			var edges int64
-			dfs(i, matrix, visit, &edges, &size)
-			if size*(size-1) != edges {
-				ans = "NO"
-				break
+		k := readInt()
+		a := make([]int, n+1)
+		cancel := true
+		for j := 0; j < k; j++ {
+			v := readInt()
+			if a[abs(v)] == -v {
+				cancel = false
 			}
+			a[abs(v)] = v
+		}
+		if cancel {
+			ans = "YES"
 		}
 	}
 	fmt.Println(ans)
 }
 
-func dfs(u int, matrix [][]int, visited []bool, edges, size *int64) {
-	visited[u] = true
-	*size++
-	*edges += int64(len(matrix[u]))
-	for _, v := range matrix[u] {
-		if !visited[v] {
-			dfs(v, matrix, visited, edges, size)
-		}
+func abs(val int) int {
+	if val < 0 {
+		return -val
 	}
+	return val
 }
 
 var scanner *bufio.Scanner
