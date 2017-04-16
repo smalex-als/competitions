@@ -1,0 +1,8 @@
+__IN__
+VKKKKKKKKKVVVVVVVVVK
+__OUT__
+3
+__IN__
+VVVVV
+__OUT__
+1
