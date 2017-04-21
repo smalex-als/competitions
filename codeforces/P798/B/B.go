@@ -20,18 +20,14 @@ outer:
 		total := i
 	inner:
 		for j := 1; j < n; j++ {
-			matched := false
 			for k := 0; k < len(a[0]); k++ {
 				c := a[j][k:] + a[j][:k]
 				if c == b {
 					total += k
-					matched = true
 					continue inner
 				}
 			}
-			if !matched {
-				continue outer
-			}
+			continue outer
 		}
 		ans = min(total, ans)
 	}
