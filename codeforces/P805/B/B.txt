@@ -1,0 +1,16 @@
+__IN__
+2
+__OUT__
+aa
+__IN__
+3
+__OUT__
+aab
+__IN__
+4
+__OUT__
+aabb
+__IN__
+5
+__OUT__
+aabba
