@@ -1,0 +1,14 @@
+__IN__
+3 5
+abc
+xaybz
+__OUT__
+2
+2 3
+__IN__
+4 10
+abcd
+ebceabazcd
+__OUT__
+1
+2
