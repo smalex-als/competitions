@@ -8,8 +8,7 @@ import (
 
 func solve() {
 	n := readInt()
-	res := make([]byte, 2000001)
-	last := 0
+	res := make([]byte, 0)
 	for i := 0; i < n; i++ {
 		s := readString()
 		t := readInt()
@@ -17,18 +16,15 @@ func solve() {
 		for j := 0; j < t; j++ {
 			pos := readInt() - 1
 			for ii := max(end-pos, 0); ii < len(s); ii++ {
+				for len(res) <= pos+ii {
+					res = append(res, 'a')
+				}
 				res[pos+ii] = s[ii]
-				end = max(pos+ii, end)
 			}
-		}
-		last = max(last, end)
-	}
-	for i := 0; i < last+1; i++ {
-		if res[i] == 0 {
-			res[i] = 'a'
+			end = max(end, pos+len(s))
 		}
 	}
-	os.Stdout.Write(res[0 : last+1])
+	os.Stdout.Write(res)
 }
 
 var scanner *bufio.Scanner
