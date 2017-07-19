@@ -1,5 +1,9 @@
 package main
 
+func main() {
+
+}
+
 func sudoku(grid [][]int) bool {
 	for j := 0; j < 9; j++ {
 		v := make([]int, 9)

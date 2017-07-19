@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func main25() {
+func main() {
 	network := [][]int{
 		{0, 2, 4, 8, 0, 0},
 		{0, 0, 0, 9, 0, 0},

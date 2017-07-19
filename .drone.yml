@@ -3,5 +3,5 @@ pipeline:
     image: golang
     commands:
       - go get
-      - go build
-      - go test
+      - go build ./...
+      - go test ./...

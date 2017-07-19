@@ -29,7 +29,6 @@ func sudoku2(grid [][]string) bool {
 					if sym != '.' {
 						num := sym - '0'
 						if a[num] > 0 {
-							fmt.Println(i+ii, j+jj)
 							return false
 						}
 						a[num]++
