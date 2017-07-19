@@ -1,3 +1,7 @@
+workspace:
+  base: /go
+  path: src/github.com/smalex-als/competitions
+
 pipeline:
   build:
     image: golang
