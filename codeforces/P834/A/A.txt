@@ -1,0 +1,16 @@
+__IN__
+^ >
+1
+__OUT__
+cw
+
+__IN__
+< ^
+3
+__OUT__
+ccw
+__IN__
+^ v
+6
+__OUT__
+undefined
