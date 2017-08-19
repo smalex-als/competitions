@@ -1,0 +1,10 @@
+__IN__
+4 2
+aabb
+__OUT__
+YES
+__IN__
+6 3
+aacaab
+__OUT__
+NO
