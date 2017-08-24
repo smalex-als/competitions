@@ -6,7 +6,6 @@ import (
 	"os"
 	"sort"
 	"strconv"
-	"strings"
 )
 
 type A struct {
@@ -31,18 +30,14 @@ func solve() {
 			djset.Union(i, cur.index)
 		}
 	}
-	byroot := make([][]string, n)
-	for i := 0; i < n; i++ {
-		byroot[i] = make([]string, 0)
-	}
-	for i := 0; i < n; i++ {
-		root := djset.Root(i)
-		byroot[root] = append(byroot[root], strconv.Itoa(i+1))
-	}
 	fmt.Println(djset.Count())
 	for i := 0; i < n; i++ {
-		if len(byroot[i]) > 0 {
-			fmt.Printf("%d %s\n", len(byroot[i]), strings.Join(byroot[i], " "))
+		if djset.upper[i] < 0 {
+			fmt.Printf("%d", -djset.upper[i])
+			for _, v := range djset.byroot[i] {
+				fmt.Printf(" %d", v+1)
+			}
+			fmt.Println()
 		}
 	}
 }
@@ -64,13 +59,16 @@ func main() {
 }
 
 type DJSet struct {
-	upper []int
+	upper  []int
+	byroot [][]int
 }
 
 func NewDJSet(n int) *DJSet {
-	s := DJSet{upper: make([]int, n)}
+	s := DJSet{upper: make([]int, n), byroot: make([][]int, n)}
 	for i := 0; i < n; i++ {
 		s.upper[i] = -1
+		s.byroot[i] = make([]int, 1)
+		s.byroot[i][0] = i
 	}
 	return &s
 }
@@ -91,6 +89,7 @@ func (s *DJSet) Union(x, y int) bool {
 		if s.upper[y] < s.upper[x] {
 			x, y = y, x
 		}
+		s.byroot[x] = append(s.byroot[x], s.byroot[y]...)
 		s.upper[x] += s.upper[y]
 		s.upper[y] = x
 	}
@@ -103,6 +102,10 @@ func (s *DJSet) Equiv(x, y int) bool {
 
 func (s *DJSet) Upper(y int) int {
 	return s.upper[y]
+}
+
+func (s *DJSet) CountByRoot(root int) int {
+	return -s.upper[root]
 }
 
 func (s *DJSet) Count() int {
