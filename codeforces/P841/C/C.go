@@ -2,163 +2,56 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"fmt"
-	"math"
 	"os"
+	"sort"
 	"strconv"
+	"strings"
 )
+
+type A struct {
+	value int
+	index int
+}
 
 func solve() {
 	n := readInt()
-	a := make([]int, n)
-	b := make([]int, n)
-	heapA := NewMinHeap(n)
+	a := make([]A, n)
 	for i := 0; i < n; i++ {
-		a[i] = readInt()
-		heapA.Add(i, -a[i])
+		a[i] = A{readInt(), i}
 	}
-	heapB := NewMinHeap(n)
+	sort.Sort(ByValue(a))
+	djset := NewDJSet(n)
 	for i := 0; i < n; i++ {
-		b[i] = readInt()
-		heapB.Add(i, b[i])
-	}
-	for i := 0; i < n; i++ {
-		first := heapA.Min()
-		indexA := heapA.ArgMin()
-		heapA.Remove(indexA)
-		indexB := heapB.ArgMin()
-		heapB.Remove(indexB)
-		a[indexB] = -first
-	}
-	var buffer bytes.Buffer
-	for i := 0; i < n; i++ {
-		if i > 0 {
-			buffer.WriteString(" ")
-		}
-		buffer.WriteString(strconv.Itoa(a[i]))
-	}
-	fmt.Println(buffer.String())
-}
-
-type MinHeap struct {
-	a    []int
-	vmap []int
-	imap []int
-	n    int
-	pos  int
-}
-
-const INF = math.MaxInt32
-
-func NewMinHeap(m int) *MinHeap {
-	heap := &MinHeap{}
-	m += 2
-	heap.n = m
-	heap.a = make([]int, heap.n)
-	heap.vmap = make([]int, heap.n)
-	heap.imap = make([]int, heap.n)
-	heap.pos = 1
-	for i := 0; i < heap.n; i++ {
-		heap.a[i] = INF
-		heap.vmap[i] = -1
-		heap.imap[i] = -1
-	}
-	return heap
-}
-
-func (h *MinHeap) Add(ind, x int) int {
-	ret := h.imap[ind]
-	if h.imap[ind] < 0 {
-		h.a[h.pos] = x
-		h.vmap[h.pos] = ind
-		h.imap[ind] = h.pos
-		h.pos++
-		h.up(h.pos - 1)
-	}
-	if ret != -1 {
-		return h.a[ret]
-	}
-	return x
-}
-
-func (h *MinHeap) Update(ind, x int) int {
-	ret := h.imap[ind]
-	if h.imap[ind] < 0 {
-		h.a[h.pos] = x
-		h.vmap[h.pos] = ind
-		h.imap[ind] = h.pos
-		h.pos++
-		h.up(h.pos - 1)
-	} else {
-		h.a[ret] = x
-		h.up(ret)
-		h.down(ret)
-	}
-	return x
-}
-
-func (h *MinHeap) Remove(ind int) int {
-	if h.pos == 1 {
-		return INF
-	}
-	if h.imap[ind] == -1 {
-		return INF
-	}
-
-	h.pos--
-	rem := h.imap[ind]
-	ret := h.a[rem]
-	h.vmap[rem] = h.vmap[h.pos]
-	h.imap[h.vmap[h.pos]] = rem
-	h.imap[ind] = -1
-	h.a[rem] = h.a[h.pos]
-	h.a[h.pos] = INF
-	h.vmap[h.pos] = -1
-
-	h.up(rem)
-	h.down(rem)
-	return ret
-}
-
-func (h *MinHeap) Min() int {
-	return h.a[1]
-}
-
-func (h *MinHeap) ArgMin() int {
-	return h.vmap[1]
-}
-
-func (h *MinHeap) Size() int {
-	return h.pos - 1
-}
-
-func (h *MinHeap) up(cur int) {
-	for c, p := cur, cur>>1; p >= 1 && h.a[p] > h.a[c]; c, p = c>>1, p>>1 {
-		h.a[p], h.a[c] = h.a[c], h.a[p]
-		h.imap[h.vmap[p]], h.imap[h.vmap[c]] = h.imap[h.vmap[c]], h.imap[h.vmap[p]]
-		h.vmap[p], h.vmap[c] = h.vmap[c], h.vmap[p]
-	}
-}
-
-func (h *MinHeap) down(cur int) {
-	for c := cur; 2*c < h.pos; {
-		b := 0
-		if h.a[2*c] < h.a[2*c+1] {
-			b = 2 * c
+		cur := a[i]
+		with := a[cur.index]
+		if with.index == i {
+			djset.Union(with.index, cur.index)
 		} else {
-			b = 2*c + 1
+			djset.Union(i, cur.index)
 		}
-		if h.a[b] < h.a[c] {
-			h.a[c], h.a[b] = h.a[b], h.a[c]
-			h.imap[h.vmap[c]], h.imap[h.vmap[b]] = h.imap[h.vmap[b]], h.imap[h.vmap[c]]
-			h.vmap[c], h.vmap[b] = h.vmap[b], h.vmap[c]
-			c = b
-		} else {
-			break
+	}
+	byroot := make([][]string, n)
+	for i := 0; i < n; i++ {
+		byroot[i] = make([]string, 0)
+	}
+	for i := 0; i < n; i++ {
+		root := djset.Root(i)
+		byroot[root] = append(byroot[root], strconv.Itoa(i+1))
+	}
+	fmt.Println(djset.Count())
+	for i := 0; i < n; i++ {
+		if len(byroot[i]) > 0 {
+			fmt.Printf("%d %s\n", len(byroot[i]), strings.Join(byroot[i], " "))
 		}
 	}
 }
+
+type ByValue []A
+
+func (a ByValue) Len() int           { return len(a) }
+func (a ByValue) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByValue) Less(i, j int) bool { return a[i].value < a[j].value }
 
 var scanner *bufio.Scanner
 
@@ -168,6 +61,58 @@ func main() {
 	scanner.Buffer(make([]byte, 0, MaxTokenLength), MaxTokenLength)
 	scanner.Split(bufio.ScanWords)
 	solve()
+}
+
+type DJSet struct {
+	upper []int
+}
+
+func NewDJSet(n int) *DJSet {
+	s := DJSet{upper: make([]int, n)}
+	for i := 0; i < n; i++ {
+		s.upper[i] = -1
+	}
+	return &s
+}
+
+func (s *DJSet) Root(x int) int {
+	if s.upper[x] < 0 {
+		return x
+	} else {
+		s.upper[x] = s.Root(s.upper[x])
+	}
+	return s.upper[x]
+}
+
+func (s *DJSet) Union(x, y int) bool {
+	x = s.Root(x)
+	y = s.Root(y)
+	if x != y {
+		if s.upper[y] < s.upper[x] {
+			x, y = y, x
+		}
+		s.upper[x] += s.upper[y]
+		s.upper[y] = x
+	}
+	return x == y
+}
+
+func (s *DJSet) Equiv(x, y int) bool {
+	return s.Root(x) == s.Root(y)
+}
+
+func (s *DJSet) Upper(y int) int {
+	return s.upper[y]
+}
+
+func (s *DJSet) Count() int {
+	ct := 0
+	for _, u := range s.upper {
+		if u < 0 {
+			ct++
+		}
+	}
+	return ct
 }
 
 // IO

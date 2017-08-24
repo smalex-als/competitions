@@ -8,20 +8,33 @@ import (
 )
 
 func solve() {
-	_ = readInt()
+	s := readString()
 	k := readInt()
-	cnt := map[rune]int{}
-	for _, v := range readString() {
-		cnt[v]++
+	m := map[rune]int{}
+	for _, v := range s {
+		m[v]++
 	}
-	for _, v := range cnt {
-		if v > k {
-			fmt.Println("NO")
-			return
+	if len(m) >= k {
+		fmt.Println(0)
+		return
+	}
+	cur := len(m)
+	res := 0
+	for _, cnt := range m {
+		for i := 1; i < cnt; i++ {
+			cur++
+			res++
+			if cur >= k {
+				fmt.Println(res)
+				return
+			}
+			if cur > 26 {
+				fmt.Println("impossible")
+				return
+			}
 		}
-
 	}
-	fmt.Println("YES")
+	fmt.Println("impossible")
 }
 
 var scanner *bufio.Scanner

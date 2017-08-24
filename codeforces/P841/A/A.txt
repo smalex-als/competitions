@@ -1,10 +1,15 @@
 __IN__
-4 2
-aabb
+yandex
+6
 __OUT__
-YES
+0
 __IN__
-6 3
-aacaab
+yahoo
+5
 __OUT__
-NO
+1
+__IN__
+google
+7
+__OUT__
+impossible
