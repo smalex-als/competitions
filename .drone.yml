@@ -4,14 +4,8 @@ workspace:
 
 pipeline:
   build:
-    image: golang:${TAG}
+    image: golang
     commands:
       - go get
       - go build ./...
       - go test ./...
-
-matrix:
-  GO_VERSION:
-    - 1.7
-    - 1.8
-    - latest
