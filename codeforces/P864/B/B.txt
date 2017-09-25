@@ -1,0 +1,15 @@
+__IN__
+11
+aaaaBaabAbA
+__OUT__
+2
+__IN__
+12
+zACaAbbaazzC
+__OUT__
+3
+__IN__
+3
+ABC
+__OUT__
+0
