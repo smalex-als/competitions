@@ -1,0 +1,15 @@
+__IN__
+6
+tom
+lucius
+ginny
+harry
+ginny
+harry
+__OUT__
+NO
+NO
+NO
+NO
+YES
+YES
