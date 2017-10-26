@@ -23,7 +23,7 @@ func solve() {
 			a[i-1], a[i] = a[i], a[i-1]
 			wins++
 		} else {
-			wins = 0
+			wins = 1
 		}
 		if wins == k {
 			fmt.Println(a[i])
