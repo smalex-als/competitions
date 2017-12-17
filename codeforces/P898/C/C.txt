@@ -1,0 +1,28 @@
+__IN__
+3
+karl 2 612 12
+petr 1 12
+katya 1 612
+__OUT__
+3
+karl 1 612
+katya 1 612
+petr 1 12
+__IN__
+2
+ivan 1 00123
+masha 1 00123
+__OUT__
+2
+ivan 1 00123
+masha 1 00123
+__IN__
+4
+ivan 3 123 123 456
+ivan 2 456 456
+ivan 8 789 3 23 6 56 9 89 2
+dasha 2 23 789
+__OUT__
+2
+dasha 2 789 23
+ivan 4 123 456 789 2
