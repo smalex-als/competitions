@@ -1,0 +1,12 @@
+__IN__
+aaabccc
+__OUT__
+YES
+__IN__
+baaccc
+__OUT__
+NO
+__IN__
+aabc
+__OUT__
+YES
