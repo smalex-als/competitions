@@ -6,6 +6,6 @@ import (
 	"github.com/smalex-als/competitions/test"
 )
 
-func TestC(t *testing.T) {
-	test.RunTest("D", t)
+func TestA(t *testing.T) {
+	test.RunTest("A", t)
 }
