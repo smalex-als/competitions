@@ -14,22 +14,16 @@ func solve() {
 		n := readInt()
 		a := readInt64Array(n)
 		ans := -1
-		for i := 0; i < n-1; i++ {
-			if a[i] > a[i+1] {
-				if solveCase(a, i) {
-					ans = i + 1
-					break
-				}
-			} else if i > 0 && a[i] > a[i-1] {
-				if solveCase(a, i) {
-					ans = i + 1
-					break
-				}
-			}
+		best := a[0]
+		for i := 0; i < n; i++ {
+			best = max(best, a[i])
 		}
-		if ans == -1 {
-			if a[n-1] > a[n-2] && solveCase(a, n-1) {
-				ans = n
+		for i := 0; i < n; i++ {
+			if a[i] == best {
+				if solveCase(a, i) {
+					ans = i + 1
+					break
+				}
 			}
 		}
 		fmt.Println(ans)
@@ -102,7 +96,7 @@ func readInt64Array(n int) []int64 {
 	return res
 }
 
-func max(a, b float64) float64 {
+func max(a, b int64) int64 {
 	if a > b {
 		return a
 	}
